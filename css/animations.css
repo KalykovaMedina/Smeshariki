@@ -1,0 +1,81 @@
+/* ============================================================
+   АНИМАЦИИ
+   ============================================================ */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 24px rgba(123, 104, 238, 0.35); }
+  50%      { box-shadow: 0 0 44px rgba(79, 195, 247, 0.55); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lessons-grid .lesson-card.reveal:nth-child(1) { transition-delay: 0.05s; }
+.lessons-grid .lesson-card.reveal:nth-child(2) { transition-delay: 0.15s; }
+.lessons-grid .lesson-card.reveal:nth-child(3) { transition-delay: 0.25s; }
+.lessons-grid .lesson-card.reveal:nth-child(4) { transition-delay: 0.35s; }
+.lessons-grid .lesson-card.reveal:nth-child(5) { transition-delay: 0.45s; }
+
+.btn-primary { animation: pulseGlow 4s ease-in-out infinite; }
+
+.video-placeholder { animation: fadeIn 0.9s ease both; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .stars-bg { display: none; }
+  .hero-visual .orbit, .hero-visual .planet { animation: none !important; }
+  .btn-primary { animation: none !important; }
+}
+/* ================= ПУЗЫРИ ПРИ КЛИКЕ ================= */
+.click-bubble {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none; /* Чтобы пузыри не мешали кликать по ссылкам */
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  /* Анимация разлета */
+  animation: popBubble 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes popBubble {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0);
+    opacity: 0;
+  }
+}

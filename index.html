@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Притяжение Земли — образовательный проект</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="stars-bg" id="starsBg" aria-hidden="true"></div>
+
+  <header class="site-header glass">
+    <div class="header-inner">
+      <div class="author-info">
+        <span class="author-name" data-content="author.fullName"></span>
+        <span class="author-group" data-content="author.group"></span>
+      </div>
+      <nav class="main-nav" id="mainNav">
+        <a href="#hero">Старт</a>
+        <a href="#about">Глава 1</a>
+        <a href="#watch">Глава 2</a>
+        <a href="#meaning">Глава 3</a>
+        <a href="#lessons">Глава 4</a>
+        <a href="#quiz">Финал</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Меню">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ГЛАВА 0: СТАРТ -->
+    <section id="hero" class="section hero">
+      <div class="hero-content">
+        <p class="hero-subtitle">Начало путешествия</p>
+        <h1 class="hero-title" data-content="cartoon.episodeName"></h1>
+        <p class="hero-desc">Добро пожаловать в космическое путешествие. Мы вместе пройдем путь от знакомства с историей до понимания её скрытого смысла. Готовы?</p>
+        <div class="hero-buttons">
+          <a href="#about" class="btn btn-primary">Начать путешествие</a>
+          <a href="#watch" class="btn btn-secondary">Сразу к видео</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="orbit"></div>
+      </div>
+    </section>
+
+    <!-- ГЛАВА 1: ЗНАКОМСТВО -->
+    <section id="about" class="section about">
+      <h2 class="section-title">Глава 1. Знакомство</h2>
+      <p class="journey-lead">Каждое путешествие начинается с героев. Давайте узнаем, кто отправится с нами в путь.</p>
+      <div class="about-grid">
+        <article class="glass-card">
+          <h3 data-content="cartoon.seriesName"></h3>
+          <p><strong>Серия:</strong> <span data-content="cartoon.episodeName"></span></p>
+          <p><strong>Год:</strong> <span data-content="cartoon.year"></span></p>
+          <p data-content="cartoon.plotShort"></p>
+        </article>
+        <article class="glass-card">
+          <h3>Основные события</h3>
+          <ul id="keyEventsList"></ul>
+        </article>
+        <article class="glass-card">
+          <h3>Главные персонажи</h3>
+          <ul id="charactersList"></ul>
+        </article>
+        <article class="glass-card">
+          <h3>Интересные особенности</h3>
+          <ul id="factsList"></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- МОСТИК 1 -->
+    <div class="journey-divider">
+      <span class="journey-icon">↓</span>
+      <p>Теперь, когда мы знаем героев, давайте увидим их историю своими глазами.</p>
+    </div>
+
+    <!-- ГЛАВА 2: СМОТРИМ -->
+    <section id="watch" class="section watch">
+      <h2 class="section-title">Глава 2. Смотрим историю</h2>
+      <div class="video-wrapper glass">
+        <div id="videoContainer"></div>
+      </div>
+      <p class="journey-lead text-center" style="margin-top: 2rem;">После просмотра не спешите уходить. Самое интересное — впереди.</p>
+    </section>
+
+    <!-- МОСТИК 2 -->
+    <div class="journey-divider">
+      <span class="journey-icon">↓</span>
+      <p>История закончилась. Но что она оставила после себя? Пришло время заглянуть глубже.</p>
+    </div>
+
+    <!-- ГЛАВА 3: СМЫСЛ -->
+    <section id="meaning" class="section meaning">
+      <h2 class="section-title">Глава 3. Скрытый смысл</h2>
+      <div class="meaning-content glass-card">
+        <h3 id="meaningHeadline"></h3>
+        <p id="meaningText"></p>
+        <div class="relevance-box">
+          <h4>Почему это важно сегодня</h4>
+          <p id="meaningRelevance"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- МОСТИК 3 -->
+    <div class="journey-divider">
+      <span class="journey-icon">↓</span>
+      <p>Мы поняли главную мысль. Осталось выяснить, как применить её в реальной жизни.</p>
+    </div>
+
+    <!-- ГЛАВА 4: УРОКИ -->
+    <section id="lessons" class="section lessons">
+      <h2 class="section-title">Глава 4. Жизненные уроки</h2>
+      <div class="lessons-grid" id="lessonsGrid"></div>
+    </section>
+
+    <!-- МОСТИК 4 -->
+    <div class="journey-divider">
+      <span class="journey-icon">↓</span>
+      <p>Вы прошли долгий путь. Но самое главное — проверить, что вы унесёте с собой из этого путешествия.</p>
+    </div>
+
+    <!-- ФИНАЛ: КВИЗ И ВЫВОД -->
+    <section id="quiz" class="section quiz">
+      <h2 class="section-title">Финал. Проверь себя</h2>
+      <div class="quiz-card glass-card">
+        <div id="quizContainer"></div>
+        <p id="quizResult" class="quiz-result" hidden></p>
+        <button id="quizRestart" class="btn btn-secondary" hidden>Пройти ещё раз</button>
+      </div>
+    </section>
+
+    <section id="conclusion" class="section conclusion">
+      <h2 class="section-title">Ваш итог</h2>
+            <div id="userSavedAnswer" class="user-saved-answer glass-card" hidden>
+        <h3>Ваш личный вывод:</h3>
+        <p id="userAnswerText"></p>
+      </div>
+      <div class="conclusion-content glass-card">
+        <p id="conclusionText"></p>
+        <blockquote id="finalPhrase" class="final-phrase"></blockquote>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer glass">
+    <p><span data-content="author.fullName"></span> · <span data-content="author.group"></span></p>
+    <p>Образовательный проект по серии «<span data-content="cartoon.episodeName"></span>»</p>
+  </footer>
+    <!-- Пасхалка Крош -->
+  <div class="easter-egg-wrapper" id="easterEgg">
+    <div class="easter-egg-bubble" id="eggBubble">Привет! 👋</div>
+    <button class="easter-egg-btn" id="eggBtn" aria-label="Секрет от Кроша">
+      <!-- Иконка Кроша (можно заменить на img, если есть картинка) -->
+      <svg viewBox="0 0 100 100" width="40" height="40">
+        <circle cx="50" cy="50" r="45" fill="#4fc3f7"/>
+        <circle cx="35" cy="40" r="8" fill="#fff"/>
+        <circle cx="65" cy="40" r="8" fill="#fff"/>
+        <circle cx="35" cy="40" r="3" fill="#000"/>
+        <circle cx="65" cy="40" r="3" fill="#000"/>
+        <path d="M 35 60 Q 50 75 65 60" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M 25 20 Q 30 5 40 20" stroke="#4fc3f7" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M 75 20 Q 70 5 60 20" stroke="#4fc3f7" stroke-width="6" fill="none" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>
