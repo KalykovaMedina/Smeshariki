@@ -14,6 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
       el.textContent = value;
     }
   });
+    /* ---------- 1.1. Hero-изображение ---------- */
+  const heroImage = document.getElementById('heroImage');
+  if (heroImage && C.images && C.images.hero) {
+    heroImage.src = C.images.hero;
+    heroImage.alt = C.images.heroAlt || '';
+    heroImage.addEventListener('load', () => heroImage.classList.add('is-loaded'));
+    heroImage.addEventListener('error', () => {
+      // Фолбэк: прячем картинку, оставляем орбиту
+      heroImage.style.display = 'none';
+    });
+  }
 
   /* ---------- 2. Основные события ---------- */
   const keyEventsList = document.getElementById('keyEventsList');
@@ -25,15 +36,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- 3. Персонажи ---------- */
+  /* ---------- 3. Персонажи (с аватарками) ---------- */
   const charactersList = document.getElementById('charactersList');
   if (charactersList) {
+    const fallbackEmoji = { "Копатыч": "🐻", "Кар-Карыч": "🐦" };
+
     C.cartoon.mainCharacters.forEach(ch => {
       const li = document.createElement('li');
+
+      const imgSrc = C.images && C.images.characters && C.images.characters[ch.name];
+
+      if (imgSrc) {
+        const avatar = document.createElement('img');
+        avatar.className = 'character-avatar';
+        avatar.src = imgSrc;
+        avatar.alt = ch.name;
+        avatar.loading = 'lazy';
+        avatar.decoding = 'async';
+
+        // Если картинка не загрузилась — подставляем эмодзи
+        avatar.addEventListener('error', () => {
+          const fb = document.createElement('span');
+          fb.className = 'character-avatar-fallback';
+          fb.setAttribute('aria-hidden', 'true');
+          fb.textContent = fallbackEmoji[ch.name] || '🎬';
+          avatar.replaceWith(fb);
+        });
+
+        li.appendChild(avatar);
+      } else {
+        const fb = document.createElement('span');
+        fb.className = 'character-avatar-fallback';
+        fb.setAttribute('aria-hidden', 'true');
+        fb.textContent = fallbackEmoji[ch.name] || '🎬';
+        li.appendChild(fb);
+      }
+
+      const textWrap = document.createElement('div');
+      textWrap.className = 'character-text';
+
       const strong = document.createElement('strong');
       strong.textContent = ch.name;
-      li.appendChild(strong);
-      li.appendChild(document.createTextNode(' — ' + ch.role));
+
+      textWrap.appendChild(strong);
+      textWrap.appendChild(document.createTextNode(' — ' + ch.role));
+
+      li.appendChild(textWrap);
       charactersList.appendChild(li);
     });
   }
@@ -93,14 +141,32 @@ document.addEventListener('DOMContentLoaded', () => {
       iframe.loading = 'lazy';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       videoContainer.appendChild(iframe);
-    } else if (officialUrl) {
-      const link = document.createElement('a');
-      link.href = officialUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.className = 'btn btn-primary';
-      link.textContent = 'Перейти к просмотру';
-      videoContainer.appendChild(link);
+    } else if (officialUrl) { // <--- Убрали лишнюю }
+      const card = document.createElement('a');
+      card.href = officialUrl;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.className = 'video-poster';
+
+      if (C.video.poster) {
+        const img = document.createElement('img');
+        img.src = C.video.poster;
+        img.alt = C.video.posterAlt || '';
+        img.loading = 'lazy';
+        card.appendChild(img);
+      }
+
+      const play = document.createElement('span');
+      play.className = 'video-poster-play';
+      play.setAttribute('aria-hidden', 'true');
+      play.textContent = '▶';
+
+      const label = document.createElement('span');
+      label.className = 'video-poster-label';
+      label.textContent = 'Перейти к просмотру';
+
+      card.append(play, label);
+      videoContainer.appendChild(card);
     } else {
       const placeholder = document.createElement('div');
       placeholder.className = 'video-placeholder';
