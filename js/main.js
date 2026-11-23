@@ -86,13 +86,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- 4. Интересные особенности ---------- */
-  const factsList = document.getElementById('factsList');
-  if (factsList) {
-    C.cartoon.interestingFacts.forEach(f => {
-      const li = document.createElement('li');
-      li.textContent = f;
-      factsList.appendChild(li);
+  /* ---------- 4.1. Галерея кадров + лайтбокс ---------- */
+  const galleryGrid = document.getElementById('galleryGrid');
+  if (galleryGrid && C.gallery && C.gallery.length) {
+    // Создаём лайтбокс один раз
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+      <button class="lightbox-close" aria-label="Закрыть">×</button>
+      <img src="" alt="">
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('img');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+    const openLightbox = (src, alt) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+
+    // Рендерим карточки галереи
+    C.gallery.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'gallery-item reveal';
+
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      img.addEventListener('error', () => {
+        // Фолбэк: показываем заглушку с эмодзи
+        card.innerHTML = '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🖼️</span>';
+      });
+
+      card.appendChild(img);
+      card.addEventListener('click', () => openLightbox(item.src, item.alt));
+
+      galleryGrid.appendChild(card);
     });
   }
 

@@ -124,8 +124,16 @@ const SITE_CONTENT = {
   video: {
     embedUrl: "",
     officialUrl: "https://vkvideo.ru/video-21665793_456242750",
-    poster: "images/hero.jpg", // Сюда тоже ставим .jpg
+    poster: "images/hero.jpg",
     posterAlt: "Кадр из серии «Притяжение земли»",
     fallbackMessage: "Видео серии «Притяжение земли» доступно на официальных платформах."
-  }
-};
+  },
+
+  // --- Галерея кадров из серии ---
+  gallery: [
+    { src: "images/gallery/frame-1.jpg", alt: "Копатыч объясняет Кар-Карычу технику подъёма штанги" },
+    { src: "images/gallery/frame-2.jpg", alt: "Кар-Карыч усердно тренируется" },
+    { src: "images/gallery/frame-3.jpg", alt: "Момент поддержки: друзья помогают друг другу" },
+    { src: "images/gallery/frame-4.jpg", alt: "Финальный кадр серии «Притяжение земли»" }
+  ]
+};  // ← ВАЖНО: закрываем объект SITE_CONTENT только здесь

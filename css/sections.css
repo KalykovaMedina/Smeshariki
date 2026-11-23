@@ -786,3 +786,116 @@
   white-space: nowrap;
   pointer-events: none;
 }
+/* ================= GALLERY ================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.2rem);
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: #000;
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease, opacity 0.35s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(157, 140, 255, 0.5);
+  box-shadow: 0 14px 40px rgba(123, 104, 238, 0.35);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+  opacity: 0.9;
+}
+
+/* Иконка "лупа" при наведении */
+.gallery-item::after {
+  content: "🔍";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-item:hover::after { opacity: 1; }
+
+/* ================= LIGHTBOX ================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(5, 5, 20, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.lightbox.open img { transform: scale(1); }
+
+.lightbox-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .lightbox { padding: 1rem; }
+}
